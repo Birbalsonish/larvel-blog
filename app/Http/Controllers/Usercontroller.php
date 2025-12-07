@@ -24,10 +24,13 @@ if (auth()->attempt(['name'=>$incomingdata['loginname'], 'password'=>$incomingda
 
 
 
-public function logout(){
+public function logout(Request $request){
     auth()->logout();
-    return redirect('/');
+    $request->session()->invalidate();       // clear session
+    $request->session()->regenerateToken();  // prevent CSRF issues
+    return redirect()->route('login');       // redirect to login page
 }
+
 
  public function register(Request $request){
     $incomingdata = $request->validate([
