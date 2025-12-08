@@ -8,18 +8,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Usercontroller;
 use App\Http\Controllers\Photocontroller;
 
-Route::get('/', function () {
-    if (!Auth::check()) {
-        return view('home'); // login/register for guests
-    }
-    return redirect('/dashboard'); // redirect to dashboard
-});
+
 
 // AdminLTE dashboard
+Route::get('/', function () {
+    return view('dashboard'); // no posts or photos loaded here
+})->middleware('auth');
 Route::get('/dashboard', function () {
     return view('dashboard'); // no posts or photos loaded here
 })->middleware('auth');
-
 
 
 // Posts page
